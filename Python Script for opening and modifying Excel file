@@ -1,0 +1,16 @@
+import pandas as pd
+
+def extract_data(file_path):
+    # Load the data from the Excel file
+    df = pd.read_excel(file_path)
+
+    # Select the desired columns based on header names
+    selected_columns = ['Name', 'Organization', 'Rating', 'Frequency']
+    selected_data = df[selected_columns]
+
+    # Export the selected data to a new Excel file
+    export_file_path = 'filtered_data.xlsx'
+    selected_data.to_excel(export_file_path, index=False)
+
+# Example usage
+extract_data('raw_data.xlsx')

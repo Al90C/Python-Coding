@@ -1,0 +1,45 @@
+Sub ReportBuilder()
+    Dim wb As Workbook
+    Dim ws As Worksheet
+    Dim filteredData As Worksheet
+    Dim nameCol As Range
+    Dim orgCol As Range
+    Dim ratingCol As Range
+    Dim freqCol As Range
+    Dim reportStartRow As Integer
+    Dim reportLastRow As Integer
+    Dim i As Integer
+
+    Set wb = ThisWorkbook
+    Set ws = wb.Sheets("raw_data")
+
+    ' Find the last row in the raw data sheet
+    reportLastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row
+
+    ' Create a new worksheet for the filtered data
+    Set filteredData = wb.Sheets.Add
+    filteredData.Name = "filtered_data"
+
+    ' Copy the desired columns from the raw data to the filtered data sheet
+    ws.Range("A1:D1").EntireRow.Copy filteredData.Range("A1")
+
+    ' Find the starting row for the report
+    reportStartRow = 2
+
+    ' Loop through each row in the filtered data
+    For i = reportStartRow To reportLastRow
+        If ws.Cells(i, 1).Value = "Name" Then
+            Set nameCol = ws.Range(ws.Cells(i, 1), ws.Cells(i, 1).End(xlDown))
+        ElseIf ws.Cells(i, 2).Value = "Organization" Then
+            Set orgCol = ws.Range(ws.Cells(i, 2), ws.Cells(i, 2).End(xlDown))
+        ElseIf ws.Cells(i, 3).Value = "Rating" Then
+            Set ratingCol = ws.Range(ws.Cells(i, 3), ws.Cells(i, 3).End(xlDown))
+        ElseIf ws.Cells(i, 4).Value = "Frequency" Then
+            Set freqCol = ws.Range(ws.Cells(i, 4), ws.Cells(i, 4).End(xlDown))
+        End If
+    Next i
+
+    ' Copy the selected columns to the filtered data sheet
+    nameCol.Copy filteredData.Range("A2")
+    orgCol.Copy filteredData.Range("B2")
+    ratingCol.

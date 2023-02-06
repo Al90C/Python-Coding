@@ -1,0 +1,23 @@
+import requests
+import pandas as pd
+import numpy as np
+
+# Make a request to the database API to retrieve the data
+url = "https://api.database.com/data"
+headers = {
+    "Authorization": "Bearer <API_KEY>"
+}
+response = requests.get(url, headers=headers)
+
+# Check if the request was successful
+if response.status_code != 200:
+    raise Exception("Failed to retrieve data")
+
+# Load the data into a Pandas DataFrame
+data = pd.DataFrame(response.json())
+
+# Optionally, use NumPy to process the data
+processed_data = np.array(data)
+
+# Export the data to a CSV file
+data.to_csv("data.csv", index=False)
